@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    canvas {
+      border: 1px solid #000;
+    }
+  </style>
+  <title>Rectangle Drag and Drop</title>
+</head>
+<body>
+
+<canvas id="myCanvas" width="400" height="200"></canvas>
+
+<script>
+  const canvas = document.getElementById('myCanvas');
+  const ctx = canvas.getContext('2d');
+
+  // Rectangles on the canvas
+  const rectangles = [
+    { x: 50, y: 50, width: 50, height: 30, color: 'blue' },
+    { x: 150, y: 100, width: 50, height: 30, color: 'green' }
+  ];
+
+  let selectedRectangle = null;
+  let offsetX, offsetY;
+  let isDragging = false;
+  let originalImageData;
+
+  canvas.addEventListener('mousedown', handleMouseDown);
+  canvas.addEventListener('mousemove', handleMouseMove);
+  canvas.addEventListener('mouseup', handleMouseUp);
+
+  function drawRectangles() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    rectangles.forEach(rect => {
+      ctx.fillStyle = rect.color;
+      ctx.fillRect(rect.x, rect.y, rect.width, rect.height);
+    }
+    );
+  }
+
+  function handleMouseDown(event) {
+    const mouseX = event.clientX - canvas.offsetLeft;
+    const mouseY = event.clientY - canvas.offsetTop;
+
+    // Check if the mouse is inside any rectangle
+    selectedRectangle = rectangles.find(rect => (
+      mouseX >= rect.x && mouseX <= rect.x + rect.width &&
+      mouseY >= rect.y && mouseY <= rect.y + rect.height
+    ));
+
+    if (selectedRectangle) {
+      offsetX = mouseX - selectedRectangle.x;
+      offsetY = mouseY - selectedRectangle.y;
+      isDragging = true;
+
+      // Save the original canvas content before dragging
+      originalImageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+    }
+  }
+
+  function handleMouseMove(event) {
+    if (isDragging) {
+      const mouseX = event.clientX - canvas.offsetLeft;
+      const mouseY = event.clientY - canvas.offsetTop;
+
+      // Restore the original canvas content
+      ctx.putImageData(originalImageData, 0, 0);
+
+      // Update the position of the selected rectangle
+      selectedRectangle.x = mouseX - offsetX;
+      selectedRectangle.y = mouseY - offsetY;
+
+      // Draw the updated state
+      drawRectangles();
+    }
+  }
+
+  function handleMouseUp() {
+    if (isDragging) {
+      // Clear the dragging flag
+      isDragging = false;
+
+      // Clear the selected rectangle
+      selectedRectangle = null;
+    }
+  }
+
+  // Initial drawing of rectangles
+  drawRectangles();
+</script>
+
+</body>
+</html>
