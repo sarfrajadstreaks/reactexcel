@@ -293,6 +293,7 @@ export const CanvasSheet = () => {
     setResizePointer(false);
   };
   return (
+    
     <>
       <canvas
         ref={canvasRef}
