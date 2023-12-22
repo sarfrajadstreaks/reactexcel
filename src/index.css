@@ -34,16 +34,14 @@ input:focus{
 td{
   position: relative;
 }
-span{
+/* span{
   min-width: 100%;   
   position: absolute;
 
   top:0;
-  /* width: 98%; */
   resize: none;
   height: inherit;
   border: none;
-  /* outline: none; */
   min-height: inherit;
   padding:0;
   margin: 0;
@@ -52,18 +50,29 @@ span{
 }
 span:focus{
   border: none;
-}
+} */
 .overlayDiv {
   position: absolute;
   display: none;
-  /* border: 2px solid red;
-  background-color: white; */
+  border: 1px solid rgb(14, 112, 249);
+  /* background-color: white; */
   /* pointer-events: none;  */
   z-index: 99999;
 }
 .overlayDiv:focus{
-  border: 1px solid red;
+  border: 2px solid rgb(14, 112, 249);
 }
 #canvasContainer {
   position: relative;
+}
+.cellDecorationIcons{
+  padding: 10px;
+  height: 24px;
+  width: 24px;
+  display: flex;
+  justify-content: center;
+}
+.cellDecorationIcons:hover{
+  background-color: antiquewhite;
+  border-radius: 5px;
 }
