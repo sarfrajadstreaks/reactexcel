@@ -3,29 +3,14 @@ import { CanvasSheet } from "./component/CanvasSheet/canvasSheet";
 import { Header } from "./component/Header/header";
 import { Workspace } from "./component/Workspace/workspace";
 import { useTheme } from "./context";
-
+import { Workbook } from "./component/Workbook/workbook";
+// App->[WorkBook]->Sheets[]->sheet->cells[]
 function App() {
-  const { theme, toggleTheme } = useTheme();
-  const [activeCell,setActiveCell]=useState(null)
-  useEffect(()=>{
-    console.log("App:activeCell:",activeCell)
-  },[activeCell])
-  return (
-    <div style={{ width: "100%", height: "100vh" }}>
-      <Header activeCell={activeCell} setActiveCell={setActiveCell}/>
-      <div
-        style={{
-          width: "100%",
-          height: "95vh",
-          overflow: "auto",
-          padding: "10px",
-        }}
-      >
-        <CanvasSheet activeCell={activeCell} setActiveCell={setActiveCell}/>
-      </div>
+  // const { theme, toggleTheme } = useTheme();
+  // const [activeCell,setActiveCell]=useState(null)
 
-      <div>footer</div>
-    </div>
+  return (
+    <Workbook data={[{name:"Sheet1"},{name:'sheet2'}]}/>
   );
 }
 
